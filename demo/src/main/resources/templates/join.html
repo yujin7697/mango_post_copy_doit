@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+<h1>회원가입</h1>
+<form name="joinform" action="/join" method="post" onsubmit="return false">
+    아이디 : <input name="username" id="usernameInput"><button onclick="checkDuplicate('usernameInput')">중복체크</button><br/>
+    비밀번호 : <input name="password" type="password"><br/>
+    이메일 : <input name="email" type="email"><br/>
+    사용자 이름 : <input name="nname" id="nnameInput"><button onclick="checkDuplicate('nnameInput')">중복체크</button><br/>
+    성명 : <input name="name"><br/>
+    생년월일 : <input name="birth" id="birthInput"><br/> <!-- 달력 버튼 추가 -->
+    휴대폰 : <input name="phone"><br/>
+    주소 : <input name="addr"><br/>
+
+    <button onclick="isValid()">회원가입</button>
+</form>
+
+<script>
+    // 생년월일 입력 필드에 Datepicker를 적용합니다.
+    $(function() {
+        $("#birthInput").datepicker({
+            dateFormat: "yy-mm-dd", // 날짜 형식 설정 (연도-월-일)
+            changeMonth: true,      // 월 선택 가능
+            changeYear: true,       // 연도 선택 가능
+            yearRange: "c-100:c+10" // 년도 선택 범위 설정
+        });
+    });
+
+    const isValid = () => {
+        const form = document.joinform;
+        if (form.username.value.trim() == "") {
+            alert("아이디를 입력하세요.");
+            return;
+        }
+        if (form.password.value.trim() == "") {
+            alert("비밀번호를 입력하세요.");
+            return;
+        }
+        if (form.email.value.trim() == "") {
+            alert("이메일을 입력하세요.");
+            return;
+        }
+        // 회원가입이 완료되면 팝업을 닫습니다.
+        closePopup();
+        form.submit();
+    }
+
+    const checkDuplicate = (inputId) => {
+        const input = document.getElementById(inputId);
+        // 여기서 중복 체크 로직을 수행하고, 결과를 팝업 창에 표시합니다.
+        // 이 예제에서는 간단히 확인 메시지를 팝업 창으로 표시합니다.
+        const result = `중복 체크 for ${input.name} field 결과입니다.`;
+        window.open('', '중복 체크 결과', 'width=400,height=200').document.write(result);
+    }
+
+    // 팝업을 닫는 함수
+    function closePopup() {
+        window.close();
+    }
+</script>
+</body>
+</html>

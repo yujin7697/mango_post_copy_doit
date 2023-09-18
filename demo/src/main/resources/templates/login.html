@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<h1>LOGIN</h1>
+
+<form action="/login" method="post">
+    ID : <input name="username"><br/>
+    PW : <input name="password" type="password"><br/>
+    <div class="form-group">
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="rememberMe" name="remember-me"/>
+            <label class="form-check-label" for="rememberMe">로그인 상태를 유지</label>
+        </div>
+    </div>
+    <input type="submit" />
+</form>
+<div>
+    <a href="javascript:void(0);" onclick="openJoinPage()">회원가입</a>
+</div>
+<div>
+    <a href="/oauth2/authorization/kakao">카카오 로그인</a>
+</div>
+<div>
+    <a href="/oauth2/authorization/naver">네이버 로그인</a>
+</div>
+<div>
+    <a href="/oauth2/authorization/google">구글 로그인</a>
+</div>
+<hr/>
+
+<script>
+    function openJoinPage() {
+        // 팝업 창을 열고 회원가입 페이지를 로드합니다.
+        var joinPageUrl = "/join"; // 회원가입 페이지 URL
+        var popupWidth = 800; // 팝업 창 너비
+        var popupHeight = 600; // 팝업 창 높이
+        var left = (window.innerWidth - popupWidth) / 2;
+        var top = (window.innerHeight - popupHeight) / 2;
+
+        var joinPopup = window.open(joinPageUrl, "JoinPage", "width=" + popupWidth + ",height=" + popupHeight + ",top=" + top + ",left=" + left);
+
+        // 팝업 창이 차단되었을 경우 대비
+        if (!joinPopup || joinPopup.closed || typeof joinPopup.closed == 'undefined') {
+            alert("팝업 차단기능이 활성화되어 있습니다. 팝업 차단을 해제해주세요.");
+        }
+    }
+</script>
+
+</body>
+</html>
