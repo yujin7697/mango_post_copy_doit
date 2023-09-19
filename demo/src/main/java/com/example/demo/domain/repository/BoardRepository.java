@@ -12,4 +12,6 @@ import java.util.function.Function;
 public interface BoardRepository extends JpaRepository<Board, String> {
 
     List<Board> findAll();
+
+    boolean existsByNumber(Long number);
 }

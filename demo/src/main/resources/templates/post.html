@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>게시물 편집</title>
+    <link rel="stylesheet" href="/static/css/style.css"> <!-- 스타일 파일을 연결합니다. -->
+    <style>
+        /* 스타일을 직접 추가하여 입력 폼을 꾸밀 수 있습니다. */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"][readonly],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            resize: none;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<h1>게시물 편집</h1>
+
+<form method="post" action="/post">
+    <label for="id">아이디:</label>
+    <input type="text" id="id" name="id" th:value="${#authentication.principal.username}" readonly /><br><br>
+
+    <label for="contents">내용:</label>
+    <textarea id="contents" name="contents" rows="4" cols="50" placeholder="내용"></textarea><br><br>
+
+    <button type="submit">작성</button>
+</form>
+
+</body>
+</html>

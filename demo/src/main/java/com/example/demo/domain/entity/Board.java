@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 
@@ -16,7 +18,8 @@ import java.time.LocalDateTime;
 @Builder
 public class Board {
     @Id
-    private Long number;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 생성 전략 사용
+    private Long number; // 또는 다른 타입을 사용할 수 있음
     private String id;
     private String contents;
     private LocalDateTime date;
