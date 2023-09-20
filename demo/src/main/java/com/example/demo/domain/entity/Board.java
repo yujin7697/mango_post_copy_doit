@@ -24,5 +24,8 @@ public class Board {
     private String contents;
     private LocalDateTime date;
     private Long hits;
-    private Long likeCount;
+    private Long like_count;
+    private String dirpath;
+    private String filename;
+    private String filesize;
 }

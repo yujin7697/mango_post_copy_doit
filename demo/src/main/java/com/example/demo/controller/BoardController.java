@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -43,11 +44,15 @@ public class BoardController {
     }
 
     @PostMapping("/post")
-    public String post_post(@Valid BoardDto dto, BindingResult bindingResult, Model model) {
+    public String post_post(@Valid BoardDto dto, BindingResult bindingResult, Model model) throws IOException {
         log.info("POST /post");
 
-        if (bindingResult.hasErrors()) {
-            return "post_form"; // 유효성 검사 에러 시 다시 폼으로 돌아갑니다.
+        if(bindingResult.hasFieldErrors()) {
+            for( FieldError error  : bindingResult.getFieldErrors()) {
+                log.info(error.getField()+ " : " + error.getDefaultMessage());
+                model.addAttribute(error.getField(), error.getDefaultMessage());
+            }
+            return "/post";
         }
 
         boolean isadd = boardService.addBoard(dto);
