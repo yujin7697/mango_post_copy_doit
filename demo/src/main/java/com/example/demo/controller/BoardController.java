@@ -11,9 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -44,23 +43,27 @@ public class BoardController {
     }
 
     @PostMapping("/post")
-    public String post_post(@Valid BoardDto dto, BindingResult bindingResult, Model model) throws IOException {
+    public String post_post(
+            @Valid @ModelAttribute("boardDto") BoardDto dto,
+            BindingResult bindingResult,
+            Model model,
+            @RequestParam("imageFiles") MultipartFile[] imageFiles
+    ) throws IOException {
         log.info("POST /post");
 
-        if(bindingResult.hasFieldErrors()) {
-            for( FieldError error  : bindingResult.getFieldErrors()) {
-                log.info(error.getField()+ " : " + error.getDefaultMessage());
+        if (bindingResult.hasFieldErrors()) {
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                log.info(error.getField() + " : " + error.getDefaultMessage());
                 model.addAttribute(error.getField(), error.getDefaultMessage());
             }
-            return "/post";
+            return "/post"; // 폼 다시 표시
         }
 
-        boolean isadd = boardService.addBoard(dto);
-        if(isadd) {
+        boolean isAdd = boardService.addBoard(dto, imageFiles);
+
+        if (isAdd) {
             return "redirect:/list";
         }
         return "redirect:/post";
     }
-
-
 }
